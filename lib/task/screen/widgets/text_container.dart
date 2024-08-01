@@ -43,7 +43,7 @@ class TextContainer2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: mq.width * .84,
+      width: mq.width * .85,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: mq.width * .04),
       margin: const EdgeInsets.all(2),
       decoration: const BoxDecoration(
