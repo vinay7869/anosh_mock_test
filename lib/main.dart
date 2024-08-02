@@ -1,6 +1,5 @@
-import 'task/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'task/screen/home/home_screen2.dart';
+import 'task/screen/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +18,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'Manrope',
-        
         useMaterial3: false,
       ),
       home: const HomeScreen(),
