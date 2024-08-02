@@ -405,7 +405,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                       children: state.tableData.map((eachData) {
                                     return Padding(
                                       padding: const EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 20),
+                                          vertical: 13, horizontal: 20),
                                       child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Row(
