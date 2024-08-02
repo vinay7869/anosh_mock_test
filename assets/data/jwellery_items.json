@@ -1,4 +1,4 @@
-final myItems = {
+{
   "Items": [
     {
       "Barcode": "2PGMBN0000914",
@@ -235,4 +235,4 @@ final myItems = {
       ]
     }
   ]
-};
+}

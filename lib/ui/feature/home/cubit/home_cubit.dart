@@ -1,7 +1,7 @@
 import 'dart:developer';
-import '../../../model/model.dart';
+import 'package:anosh_mock_test/respository/repository.dart';
+import '../../../../model/jwellery_model.dart';
 import 'package:bloc/bloc.dart';
-import '../../../json/my_json.dart';
 
 part 'home_state.dart';
 
@@ -15,10 +15,8 @@ class HomeCubit extends Cubit<HomeState> {
           selectedItem: null,
         ));
 
-  void fetchItems() {
-    final itemsList = List.from(myItems['Items'] as Iterable)
-        .map((e) => Item.fromJson(e))
-        .toList();
+  void fetchItems() async {
+    final itemsList = await JwelleryRepository().getJwelleryData();
     emit(state.copyWith(items: itemsList, show: false));
   }
 
@@ -36,7 +34,8 @@ class HomeCubit extends Cubit<HomeState> {
 
   void clearSearch() {
     log('Before -->> ${state.selectedItem}');
-    emit(state.copyWith(selectedItem: null, show: false, searchItem: [],tableData: []));
+    emit(state.copyWith(
+        selectedItem: null, show: false, searchItem: [], tableData: []));
     log('After -->> ${state.selectedItem}');
   }
 }
