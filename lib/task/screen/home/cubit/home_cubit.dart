@@ -36,7 +36,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   void clearSearch() {
     log('Before -->> ${state.selectedItem}');
-    emit(state.copyWith(selectedItem: null, show: false, searchItem: []));
+    emit(state.copyWith(selectedItem: null, show: false, searchItem: [],tableData: []));
     log('After -->> ${state.selectedItem}');
   }
 }

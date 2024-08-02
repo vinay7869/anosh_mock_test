@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 import '../../../main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -379,6 +377,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           state.tableData.isEmpty
                               ? Container(
                                   height: 100,
+                                  width:
+                                      mq.width * .27 * tableDataString.length +
+                                          40,
                                   decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(10),

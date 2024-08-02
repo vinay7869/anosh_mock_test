@@ -26,7 +26,7 @@ final class HomeState {
       items: items ?? this.items,
       searchItem: searchItem ?? this.searchItem,
       tableData: tableData ?? this.tableData,
-      selectedItem: selectedItem ?? this.selectedItem,
+      selectedItem: selectedItem,
       show: show ?? this.show,
     );
   }
