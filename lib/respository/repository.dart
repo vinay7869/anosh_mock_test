@@ -17,15 +17,13 @@ class JwelleryRepository {
     if (loadFromAsset.containsKey('Items')) {
       final items = loadFromAsset['Items'];
 
-      if (items is List) {
-        final jwelleryList =
-            List.from(items).map((e) => Item.fromJson(e)).toList();
-        log(jwelleryList.length.toString());
-        return jwelleryList;
-      } else {
-        return [];
-      }
+      final jwelleryList =
+          List.from(items).map((e) => Item.fromJson(e)).toList();
+      log(jwelleryList.length.toString());
+      return jwelleryList;
+    } else {
+      log("No data found");
+      return [];
     }
-    return [];
   }
 }
