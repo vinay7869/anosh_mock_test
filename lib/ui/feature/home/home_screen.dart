@@ -105,7 +105,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                             }
                           },
                           onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                          cursorColor: Colors.black,
+                          cursorColor: Colors.white,
+                          style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                               isDense: true,
                               filled: true,
