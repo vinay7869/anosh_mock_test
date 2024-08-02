@@ -3,7 +3,7 @@ import '../../../main.dart';
 import 'gradient_border.dart';
 
 class TextContainer extends StatelessWidget {
-  final String text;
+  final String? text;
   const TextContainer({
     super.key,
     required this.text,
@@ -26,7 +26,7 @@ class TextContainer extends StatelessWidget {
             Color(0xffB7B7B7),
           ]))),
       child: Text(
-        text,
+        text ?? "",
         style: const TextStyle(color: Colors.white),
       ),
     );
@@ -61,5 +61,24 @@ class TextContainer2 extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
       ),
     );
+  }
+}
+
+class TableDataText extends StatelessWidget {
+  const TableDataText({
+    super.key,
+    required this.text,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: mq.width * .27,
+        child: Text(
+          text,
+          style: const TextStyle(color: Colors.white),
+        ));
   }
 }

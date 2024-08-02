@@ -1,4 +1,5 @@
-import 'package:anosh_mock_test/task/model/model.dart';
+import 'dart:developer';
+import '../../../model/model.dart';
 import 'package:bloc/bloc.dart';
 import '../../../json/my_json.dart';
 
@@ -9,6 +10,7 @@ class HomeCubit extends Cubit<HomeState> {
       : super(const HomeState(
           items: [],
           searchItem: [],
+          tableData: [],
           show: false,
           selectedItem: null,
         ));
@@ -22,16 +24,19 @@ class HomeCubit extends Cubit<HomeState> {
 
   void searchItem(String barcode) {
     final searchResults =
-        state.items.where((item) => item.barcode.contains(barcode)).toList();
+        state.items.where((e) => e.barcode.contains(barcode)).toList();
 
     emit(state.copyWith(searchItem: searchResults, show: true));
   }
 
   void selectItem(Item item) {
-    emit(state.copyWith(selectedItem: item, show: false));
+    final tableData = item.tableData;
+    emit(state.copyWith(selectedItem: item, show: false, tableData: tableData));
   }
 
   void clearSearch() {
+    log('Before -->> ${state.selectedItem}');
     emit(state.copyWith(selectedItem: null, show: false, searchItem: []));
+    log('After -->> ${state.selectedItem}');
   }
 }
