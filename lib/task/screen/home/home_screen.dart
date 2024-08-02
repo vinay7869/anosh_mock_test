@@ -106,21 +106,25 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           },
                           onTapOutside: (_) => FocusScope.of(context).unfocus(),
                           cursorColor: Colors.black,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               isDense: true,
                               filled: true,
-                              fillColor: Color(0xff6C6C6C),
-                              enabledBorder: OutlineInputBorder(
+                              fillColor:
+                                  const Color(0xff6C6C6C).withOpacity(.25),
+                              enabledBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(40))),
-                              focusedBorder: OutlineInputBorder(
+                              focusedBorder: const OutlineInputBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(40))),
-                              prefixIcon: Icon(
+                              prefixIcon: const Icon(
                                 Icons.search_rounded,
                                 color: Colors.black,
+                                size: 25,
                               ),
-                              hintText: 'Search'),
+                              hintText: 'Search',
+                              hintStyle:
+                                  const TextStyle(fontWeight: FontWeight.w700)),
                         ),
                       ),
                     ),
@@ -129,7 +133,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           _controller.clear();
                           c.clearSearch();
                         },
-                        child: const Text('Clear'))
+                        child: const Text('clear'))
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -224,7 +228,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                 ],
                               ),
                               Container(
-                                height: mq.height * .21,
+                                height: mq.width > 480
+                                    ? mq.height * .45
+                                    : mq.height * .22,
                                 width: mq.width * .4,
                                 margin: const EdgeInsets.only(left: 3),
                                 decoration: BoxDecoration(
@@ -345,11 +351,12 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                 //
                                 Container(
                                   height: 47,
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(10),
                                           topRight: Radius.circular(10)),
-                                      color: Colors.grey),
+                                      color: const Color(0xffD9D9D9)
+                                          .withOpacity(.35)),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 20),

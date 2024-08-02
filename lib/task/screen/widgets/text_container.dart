@@ -14,16 +14,15 @@ class TextContainer extends StatelessWidget {
     return Container(
       width: mq.width * .42,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: mq.width * .04),
-      margin: const EdgeInsets.all(2),
-      decoration: const BoxDecoration(
-          color: Color.fromARGB(97, 102, 102, 102),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+      margin: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+          color: const Color(0xffD9D9D9).withOpacity(.05),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           border: GradientBoxBorder(
               gradient: LinearGradient(colors: [
-            Color(0xffB7B7B7),
-            Color(0xff8B8B8B),
-            Color(0xff666666),
-            Color(0xffB7B7B7),
+            const Color(0xffB7B7B7).withOpacity(.45),
+            const Color(0xff8B8B8B).withOpacity(.45),
+            const Color(0xff666666).withOpacity(.45),
           ]))),
       child: Text(
         text ?? "",
@@ -45,16 +44,15 @@ class TextContainer2 extends StatelessWidget {
     return Container(
       width: mq.width * .85,
       padding: EdgeInsets.only(top: 8, bottom: 8, left: mq.width * .04),
-      margin: const EdgeInsets.all(2),
-      decoration: const BoxDecoration(
-          color: Color.fromARGB(97, 102, 102, 102),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+      margin: const EdgeInsets.all(3),
+      decoration: BoxDecoration(
+          color: const Color(0xffD9D9D9).withOpacity(.05),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
           border: GradientBoxBorder(
               gradient: LinearGradient(colors: [
-            Color(0xffB7B7B7),
-            Color(0xff8B8B8B),
-            Color(0xff666666),
-            Color(0xffB7B7B7),
+            const Color(0xffB7B7B7).withOpacity(.45),
+            const Color(0xff8B8B8B).withOpacity(.45),
+            const Color(0xff666666).withOpacity(.45),
           ]))),
       child: Text(
         text,
