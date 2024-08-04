@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'cubit/home_cubit.dart';
 import '../../common/widgets/text_container.dart';
 
+bool isMobile = mq.width < 480;
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -25,6 +27,7 @@ class HomeScreenView extends StatefulWidget {
 
 class _HomeScreenViewState extends State<HomeScreenView> {
   final _controller = TextEditingController();
+  bool isMobile = mq.width < 480;
   List<String> tableDataString = const [
     'LOT Description',
     'Group',
@@ -57,16 +60,19 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                   IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
             ),
             body: ListView(
-              padding: const EdgeInsets.fromLTRB(7, 2, 7, 7),
+              padding: const EdgeInsets.fromLTRB(25, 7, 25, 25),
               children: [
                 // details card
                 Padding(
-                  padding: EdgeInsets.only(left: mq.width * .07),
+                  padding: EdgeInsets.only(
+                      left: isMobile ? mq.width * .07 : mq.width * .05),
                   child: Row(
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(
-                            vertical: 10, horizontal: mq.width * .12),
+                            vertical: 10,
+                            horizontal:
+                                isMobile ? mq.width * .12 : mq.width * .05),
                         decoration: const BoxDecoration(
                             color: Color(0xffEDEDED),
                             borderRadius:
@@ -84,173 +90,77 @@ class _HomeScreenViewState extends State<HomeScreenView> {
 
                 // divider
                 const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   child: Divider(color: Colors.white),
                 ),
 
                 //search text field
-                Row(
-                  children: [
-                    Expanded(
-                      child: SizedBox(
-                        height:
-                            mq.width < 480 ? mq.height * .06 : mq.height * .13,
-                        child: TextField(
-                          controller: _controller,
-                          onChanged: (value) {
-                            if (value.isEmpty) {
-                              c.clearSearch();
-                            } else {
-                              c.searchItem(value);
-                            }
-                          },
-                          onTapOutside: (_) => FocusScope.of(context).unfocus(),
-                          cursorColor: Colors.white,
-                          style: const TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                              isDense: true,
-                              filled: true,
-                              fillColor:
-                                  const Color(0xff6C6C6C).withOpacity(.25),
-                              enabledBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40))),
-                              focusedBorder: const OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40))),
-                              prefixIcon: const Icon(
-                                Icons.search_rounded,
-                                color: Colors.black,
-                                size: 25,
-                              ),
-                              hintText: 'Search',
-                              hintStyle:
-                                  const TextStyle(fontWeight: FontWeight.w700)),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: isMobile ? 10 : mq.width * .25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: SizedBox(
+                          height: isMobile ? mq.height * .06 : mq.height * .08,
+                          child: TextField(
+                            controller: _controller,
+                            onChanged: (value) {
+                              if (value.isEmpty) {
+                                c.clearSearch();
+                              } else {
+                                c.searchItem(value);
+                              }
+                            },
+                            onTapOutside: (_) =>
+                                FocusScope.of(context).unfocus(),
+                            cursorColor: Colors.white,
+                            style: const TextStyle(color: Colors.white),
+                            decoration: InputDecoration(
+                                isDense: true,
+                                filled: true,
+                                fillColor:
+                                    const Color(0xff6C6C6C).withOpacity(.25),
+                                enabledBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(40))),
+                                focusedBorder: const OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(40))),
+                                prefixIcon: const Icon(
+                                  Icons.search_rounded,
+                                  color: Colors.black,
+                                  size: 25,
+                                ),
+                                hintText: 'Search',
+                                hintStyle: const TextStyle(
+                                    fontWeight: FontWeight.w700)),
+                          ),
                         ),
                       ),
-                    ),
-                    TextButton(
-                        onPressed: () {
-                          _controller.clear();
-                          c.clearSearch();
-                        },
-                        child: const Text('clear'))
-                  ],
+                      TextButton(
+                          onPressed: () {
+                            _controller.clear();
+                            c.clearSearch();
+                          },
+                          child: const Text('clear'))
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
+
                 //
                 Stack(
                   children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Column(
-                        children: [
-                          // upper grid
-                          Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      TextContainer(
-                                          text: state.selectedItem?.barcode ??
-                                              'Barcode No.'),
-                                      TextContainer(
-                                          text: state.selectedItem?.location ??
-                                              'Location'),
-                                      TextContainer(
-                                          text: state.selectedItem?.branch ??
-                                              'Branch'),
-                                      TextContainer(
-                                          text: state.selectedItem?.status ??
-                                              'Status'),
-                                      TextContainer(
-                                          text: state.selectedItem?.counter
-                                                  .toString() ??
-                                              'Counter'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      TextContainer(
-                                          text: state.selectedItem?.source ??
-                                              'Source'),
-                                      TextContainer(
-                                          text: state.selectedItem?.category ??
-                                              'Category'),
-                                      TextContainer(
-                                          text:
-                                              state.selectedItem?.collection ??
-                                                  'Collection'),
-                                      TextContainer2(
-                                          text:
-                                              state.selectedItem?.description ??
-                                                  'Description'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      TextContainer(
-                                          text: state.selectedItem?.metalGrp ??
-                                              'Metal_Grp'),
-                                      TextContainer(
-                                          text:
-                                              state.selectedItem?.stkSection ??
-                                                  'STK_Section'),
-                                      TextContainer(
-                                          text: state.selectedItem?.mfgdBy ??
-                                              'Mfgd_By'),
-                                      TextContainer2(
-                                          text: state.selectedItem?.notes ??
-                                              'Notes'),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      TextContainer(
-                                          text:
-                                              state.selectedItem?.inStkSince ??
-                                                  'In_STK_Since'),
-                                      TextContainer(
-                                          text: state.selectedItem?.certNo ??
-                                              'Cert_No'),
-                                      TextContainer(
-                                          text: state.selectedItem?.huidNo ??
-                                              'HUID_No'),
-                                      TextContainer(
-                                          text: state.selectedItem?.cusName ??
-                                              'Order_No'),
-                                      TextContainer(
-                                          text: state.selectedItem?.size ??
-                                              'Cus_Name'),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              Container(
-                                height: mq.width > 480
-                                    ? mq.height * .45
-                                    : mq.height * .22,
-                                width: mq.width * .4,
-                                margin: const EdgeInsets.only(left: 3),
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(state
-                                                .selectedItem?.imageLink ??
-                                            "https://nulldata.com/img/nulldata.jpg")),
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20))),
-                              )
-                            ],
-                          ),
-
-                          // bottom grid
-                          Padding(
-                            padding:
-                                EdgeInsets.only(top: mq.height * .01, left: 10),
-                            child: Row(
+                    SizedBox(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          children: [
+                            // upper grid
+                            Row(
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,188 +168,315 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                     Row(
                                       children: [
                                         TextContainer(
-                                            text: state.selectedItem?.quality ??
-                                                'Size'),
+                                            text: state.selectedItem?.barcode ??
+                                                'Barcode No.'),
                                         TextContainer(
-                                            text: state.selectedItem?.kt
-                                                    .toString() ??
-                                                'Quality'),
+                                            text:
+                                                state.selectedItem?.location ??
+                                                    'Location'),
                                         TextContainer(
-                                            text: state.selectedItem?.pcs
-                                                    .toString() ??
-                                                'KT'),
+                                            text: state.selectedItem?.branch ??
+                                                'Branch'),
                                         TextContainer(
-                                            text: state.selectedItem?.grossWt
-                                                    .toString() ??
-                                                'Pcs'),
+                                            text: state.selectedItem?.status ??
+                                                'Status'),
                                         TextContainer(
-                                            text: state.selectedItem?.netWt
+                                            text: state.selectedItem?.counter
                                                     .toString() ??
-                                                'Gross_Wt'),
-                                        TextContainer(
-                                            text: state.selectedItem?.diaPcs
-                                                    .toString() ??
-                                                'Net_Wt'),
+                                                'Counter'),
                                       ],
                                     ),
                                     Row(
                                       children: [
                                         TextContainer(
-                                            text: state.selectedItem?.diaWt
-                                                    .toString() ??
-                                                'Dia_Pcs'),
+                                            text: state.selectedItem?.source ??
+                                                'Source'),
                                         TextContainer(
-                                            text: state.selectedItem?.clsPcs
-                                                    .toString() ??
-                                                'Dia_Wt'),
+                                            text:
+                                                state.selectedItem?.category ??
+                                                    'Category'),
                                         TextContainer(
-                                            text: state.selectedItem?.clsWt
-                                                    .toString() ??
-                                                'Cls_Pcs'),
-                                        TextContainer(
-                                            text: state.selectedItem?.chainWt
-                                                    .toString() ??
-                                                'Cls_Wt'),
-                                        TextContainer(
-                                            text: state.selectedItem?.mRate
-                                                    .toString() ??
-                                                'Chain_Wt'),
-                                        TextContainer(
-                                            text: state.selectedItem?.mValue
-                                                    .toString() ??
-                                                'M_Rate'),
+                                            text: state
+                                                    .selectedItem?.collection ??
+                                                'Collection'),
+                                        TextContainer2(
+                                            text: state.selectedItem
+                                                    ?.description ??
+                                                'Description'),
                                       ],
                                     ),
                                     Row(
                                       children: [
                                         TextContainer(
-                                            text: state.selectedItem?.lRate
-                                                    .toString() ??
-                                                'M_Value'),
+                                            text:
+                                                state.selectedItem?.metalGrp ??
+                                                    'Metal_Grp'),
                                         TextContainer(
-                                            text: state.selectedItem?.lCharges
-                                                    .toString() ??
-                                                'L_Rate'),
+                                            text: state
+                                                    .selectedItem?.stkSection ??
+                                                'STK_Section'),
                                         TextContainer(
-                                            text: state.selectedItem?.rCharges
-                                                    .toString() ??
-                                                'L_Charges'),
+                                            text: state.selectedItem?.mfgdBy ??
+                                                'Mfgd_By'),
+                                        TextContainer2(
+                                            text: state.selectedItem?.notes ??
+                                                'Notes'),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
                                         TextContainer(
-                                            text: state.selectedItem?.oCharges
-                                                    .toString() ??
-                                                'R_Charges'),
+                                            text: state
+                                                    .selectedItem?.inStkSince ??
+                                                'In_STK_Since'),
                                         TextContainer(
-                                            text: state.selectedItem?.mrp
-                                                    .toString() ??
-                                                'O_Charges'),
+                                            text: state.selectedItem?.certNo ??
+                                                'Cert_No'),
                                         TextContainer(
-                                            text: state.selectedItem?.mrp
-                                                    .toString() ??
-                                                'MRP'),
+                                            text: state.selectedItem?.huidNo ??
+                                                'HUID_No'),
+                                        TextContainer(
+                                            text: state.selectedItem?.cusName ??
+                                                'Order_No'),
+                                        TextContainer(
+                                            text: state.selectedItem?.size ??
+                                                'Cus_Name'),
                                       ],
                                     ),
                                   ],
                                 ),
+                                Container(
+                                  height: isMobile
+                                      ? mq.height * .22
+                                      : mq.height * .28,
+                                  width: isMobile
+                                      ? mq.width * .22 * 2
+                                      : mq.width * .18,
+                                  margin: const EdgeInsets.only(left: 7),
+                                  decoration: const BoxDecoration(
+                                      color: Colors.amber,
+                                      // image: DecorationImage(
+                                      //     fit: BoxFit.cover,
+                                      //     image: NetworkImage(state
+                                      //             .selectedItem?.imageLink ??
+                                      //         "https://nulldata.com/img/nulldata.jpg")),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(20))),
+                                )
                               ],
                             ),
-                          ),
 
-                          // Table data
-                          Padding(
-                            padding: EdgeInsets.only(top: mq.height * .03),
-                            child: Column(
-                              children: [
-                                //
-                                Container(
-                                  height: 47,
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(10),
-                                          topRight: Radius.circular(10)),
-                                      color: const Color(0xffD9D9D9)
-                                          .withOpacity(.35)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Row(
-                                      children: tableDataString.map((e) {
-                                        return SizedBox(
-                                          width: mq.width * .27,
-                                          child: Text(
-                                            e,
-                                            style: const TextStyle(
-                                                color: Colors.white),
-                                          ),
-                                        );
-                                      }).toList(),
+                            // bottom grid
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: mq.height * .01, right: mq.width * .03),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      TextContainer(
+                                          text: state.selectedItem?.quality ??
+                                              'Size'),
+                                      TextContainer(
+                                          text: state.selectedItem?.kt
+                                                  .toString() ??
+                                              'Quality'),
+                                      TextContainer(
+                                          text: state.selectedItem?.pcs
+                                                  .toString() ??
+                                              'KT'),
+                                      TextContainer(
+                                          text: state.selectedItem?.grossWt
+                                                  .toString() ??
+                                              'Pcs'),
+                                      TextContainer(
+                                          text: state.selectedItem?.netWt
+                                                  .toString() ??
+                                              'Gross_Wt'),
+                                      TextContainer(
+                                          text: state.selectedItem?.diaPcs
+                                                  .toString() ??
+                                              'Net_Wt'),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      TextContainer(
+                                          text: state.selectedItem?.diaWt
+                                                  .toString() ??
+                                              'Dia_Pcs'),
+                                      TextContainer(
+                                          text: state.selectedItem?.clsPcs
+                                                  .toString() ??
+                                              'Dia_Wt'),
+                                      TextContainer(
+                                          text: state.selectedItem?.clsWt
+                                                  .toString() ??
+                                              'Cls_Pcs'),
+                                      TextContainer(
+                                          text: state.selectedItem?.chainWt
+                                                  .toString() ??
+                                              'Cls_Wt'),
+                                      TextContainer(
+                                          text: state.selectedItem?.mRate
+                                                  .toString() ??
+                                              'Chain_Wt'),
+                                      TextContainer(
+                                          text: state.selectedItem?.mValue
+                                                  .toString() ??
+                                              'M_Rate'),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      TextContainer(
+                                          text: state.selectedItem?.lRate
+                                                  .toString() ??
+                                              'M_Value'),
+                                      TextContainer(
+                                          text: state.selectedItem?.lCharges
+                                                  .toString() ??
+                                              'L_Rate'),
+                                      TextContainer(
+                                          text: state.selectedItem?.rCharges
+                                                  .toString() ??
+                                              'L_Charges'),
+                                      TextContainer(
+                                          text: state.selectedItem?.oCharges
+                                                  .toString() ??
+                                              'R_Charges'),
+                                      TextContainer(
+                                          text: state.selectedItem?.mrp
+                                                  .toString() ??
+                                              'O_Charges'),
+                                      TextContainer(
+                                          text: state.selectedItem?.mrp
+                                                  .toString() ??
+                                              'MRP'),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            // Table data
+                            Padding(
+                              padding: EdgeInsets.only(top: mq.height * .03),
+                              child: Column(
+                                children: [
+                                  //
+                                  Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10)),
+                                        color: const Color(0xffD9D9D9)
+                                            .withOpacity(.35)),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: isMobile
+                                              ? mq.width * .11
+                                              : mq.width * .03),
+                                      child: Row(
+                                        children: tableDataString.map((e) {
+                                          return Container(
+                                            padding: const EdgeInsets.all(7),
+                                            width: isMobile
+                                                ? mq.width * .27
+                                                : mq.width * .1,
+                                            child: Text(
+                                              e,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
                                     ),
                                   ),
-                                ),
 
-                                //
-                              ],
+                                  //
+                                ],
+                              ),
                             ),
-                          ),
 
-                          //
-                          state.tableData.isEmpty
-                              ? Container(
-                                  height: 100,
-                                  width:
-                                      mq.width * .27 * tableDataString.length +
-                                          40,
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        bottomRight: Radius.circular(10)),
-                                    color: Color.fromARGB(97, 102, 102, 102),
-                                  ),
-                                )
-                              : Container(
-                                  decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        bottomRight: Radius.circular(10)),
-                                    color: Color.fromARGB(97, 102, 102, 102),
-                                  ),
-                                  child: Column(
-                                      children: state.tableData.map((eachData) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 13, horizontal: 20),
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            TableDataText(
-                                                text: eachData.lotDescription),
-                                            TableDataText(text: eachData.group),
-                                            TableDataText(text: eachData.units),
-                                            TableDataText(
-                                                text: eachData.pcs.toString()),
-                                            TableDataText(
-                                                text:
-                                                    eachData.weight.toString()),
-                                            TableDataText(
-                                                text: eachData.rate.toString()),
-                                            TableDataText(
-                                                text:
-                                                    eachData.value.toString()),
-                                            TableDataText(
-                                                text:
-                                                    eachData.sRate.toString()),
-                                            TableDataText(
-                                                text:
-                                                    eachData.sValue.toString()),
-                                          ],
+                            //
+                            state.tableData.isEmpty
+                                ? Container(
+                                    height: 100,
+                                    width: isMobile
+                                        ? mq.width *
+                                                .27 *
+                                                tableDataString.length +
+                                            mq.width * .22
+                                        : mq.width *
+                                                .1 *
+                                                tableDataString.length +
+                                            mq.width * .06,
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      color: Color.fromARGB(97, 102, 102, 102),
+                                    ),
+                                  )
+                                : Container(
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10),
+                                          bottomRight: Radius.circular(10)),
+                                      color: Color.fromARGB(97, 102, 102, 102),
+                                    ),
+                                    child: Column(
+                                        children:
+                                            state.tableData.map((eachData) {
+                                      return Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10,
+                                            horizontal: isMobile
+                                                ? mq.width * .11
+                                                : mq.width * .03),
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              TableDataText(
+                                                  text:
+                                                      eachData.lotDescription),
+                                              TableDataText(
+                                                  text: eachData.group),
+                                              TableDataText(
+                                                  text: eachData.units),
+                                              TableDataText(
+                                                  text:
+                                                      eachData.pcs.toString()),
+                                              TableDataText(
+                                                  text: eachData.weight
+                                                      .toString()),
+                                              TableDataText(
+                                                  text:
+                                                      eachData.rate.toString()),
+                                              TableDataText(
+                                                  text: eachData.value
+                                                      .toString()),
+                                              TableDataText(
+                                                  text: eachData.sRate
+                                                      .toString()),
+                                              TableDataText(
+                                                  text: eachData.sValue
+                                                      .toString()),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }).toList()),
-                                ),
-                        ],
+                                      );
+                                    }).toList()),
+                                  ),
+                          ],
+                        ),
                       ),
                     ),
 

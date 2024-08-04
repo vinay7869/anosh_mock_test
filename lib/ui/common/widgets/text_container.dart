@@ -1,3 +1,4 @@
+import 'package:anosh_mock_test/ui/feature/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../main.dart';
 import 'gradient_border.dart';
@@ -12,8 +13,8 @@ class TextContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: mq.width * .42,
-      padding: EdgeInsets.only(top: 8, bottom: 8, left: mq.width * .04),
+      width: isMobile ? mq.width * .42 : mq.width * .15,
+      padding: const EdgeInsets.only(top: 8, bottom: 8, left: 15),
       margin: const EdgeInsets.all(3),
       decoration: BoxDecoration(
           color: const Color(0xffD9D9D9).withOpacity(.05),
@@ -42,8 +43,8 @@ class TextContainer2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: mq.width * .85,
-      padding: EdgeInsets.only(top: 8, bottom: 8, left: mq.width * .04),
+      width: isMobile ? mq.width * .852 : mq.width * .305,
+      padding: const EdgeInsets.only(top: 8, bottom: 8, left: 15),
       margin: const EdgeInsets.all(3),
       decoration: BoxDecoration(
           color: const Color(0xffD9D9D9).withOpacity(.05),
@@ -73,10 +74,13 @@ class TableDataText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: mq.width * .27,
-        child: Text(
-          text,
-          style: const TextStyle(color: Colors.white),
+        width: isMobile ? mq.width * .27 : mq.width * .1,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: Text(
+            text,
+            style: const TextStyle(color: Colors.white),
+          ),
         ));
   }
 }
