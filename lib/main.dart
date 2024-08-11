@@ -1,4 +1,7 @@
+import 'package:anosh_mock_test/pp/pp.dart';
+import 'package:anosh_mock_test/ui/feature/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'ui/feature/home/home_screen.dart';
 
@@ -14,23 +17,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     mq = MediaQuery.sizeOf(context);
-    return MaterialApp(
-      builder: (context, child) => ResponsiveBreakpoints.builder(
-        child: child!,
-        breakpoints: [
-          const Breakpoint(start: 0, end: 450, name: MOBILE),
-          const Breakpoint(start: 451, end: 800, name: TABLET),
-          const Breakpoint(start: 801, end: 1920, name: DESKTOP),
-          const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
-        ],
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (_) => HomeCubit())],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Manrope',
+          useMaterial3: false,
+        ),
+        home: const PP(),
       ),
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Manrope',
-        useMaterial3: false,
-      ),
-      home: const HomeScreen(),
     );
   }
 }

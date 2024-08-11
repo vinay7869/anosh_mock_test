@@ -27,7 +27,7 @@ class HomeScreenView extends StatefulWidget {
 
 class _HomeScreenViewState extends State<HomeScreenView> {
   final _controller = TextEditingController();
-  bool isMobile = mq.width < 480;
+
   List<String> tableDataString = const [
     'LOT Description',
     'Group',
@@ -253,14 +253,13 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                       ? mq.width * .22 * 2
                                       : mq.width * .18,
                                   margin: const EdgeInsets.only(left: 7),
-                                  decoration: const BoxDecoration(
-                                      color: Colors.amber,
-                                      // image: DecorationImage(
-                                      //     fit: BoxFit.cover,
-                                      //     image: NetworkImage(state
-                                      //             .selectedItem?.imageLink ??
-                                      //         "https://nulldata.com/img/nulldata.jpg")),
-                                      borderRadius: BorderRadius.all(
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(state
+                                                  .selectedItem?.imageLink ??
+                                              "https://nulldata.com/img/nulldata.jpg")),
+                                      borderRadius: const BorderRadius.all(
                                           Radius.circular(20))),
                                 )
                               ],
