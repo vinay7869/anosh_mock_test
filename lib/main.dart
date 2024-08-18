@@ -2,6 +2,7 @@ import 'package:anosh_mock_test/pp/pp.dart';
 import 'package:anosh_mock_test/premium%20bloc/home/bloc/home_bloc.dart';
 import 'package:anosh_mock_test/premium%20bloc/home/screen/bloc_screen.dart';
 import 'package:anosh_mock_test/premium%20bloc/home/screen/cubit/cubit_h_cubit.dart';
+import 'package:anosh_mock_test/premium%20bloc/home/screen/tree_view/cubit/tree_view_cubit.dart';
 import 'package:anosh_mock_test/ui/feature/home/cubit/home_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => HomeCubit()),
         BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => CubitHCubit()),
+        BlocProvider(create: (_) => TreeViewCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
