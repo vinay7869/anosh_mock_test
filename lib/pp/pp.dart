@@ -1,7 +1,5 @@
 import 'package:anosh_mock_test/main.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class PP extends StatefulWidget {
   const PP({super.key});
